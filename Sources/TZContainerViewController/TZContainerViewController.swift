@@ -1,7 +1,7 @@
 import UIKit
 
 /** Container View Controller that will act more or so as Navigation controller but without the NavigationBar */
-public class TZContainerViewController: UIViewController {
+open class TZContainerViewController: UIViewController {
     private enum SnapPoint {
         case left
         case right
@@ -9,9 +9,9 @@ public class TZContainerViewController: UIViewController {
     }
     
     /** This is the view that will be used as the container for child views. They will be added here */
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet open weak var containerView: UIView!
     
-    public var currentIndex : Int {
+    open var currentIndex : Int {
         return self.children.count - 1
     }
     
