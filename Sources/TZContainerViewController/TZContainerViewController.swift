@@ -118,6 +118,7 @@ open class TZContainerViewController: UIViewController {
         if let destinationView = controller.view {
             addChild(controller)
             containerView.addSubview(destinationView)
+            destinationView.translatesAutoresizingMaskIntoConstraints = false
             // equal Width and height
             destinationView.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0).isActive = true
             destinationView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 1.0).isActive = true
