@@ -15,30 +15,10 @@ open class TZContainerViewController: UIViewController {
         return self.children.count - 1
     }
     
-    private func getPosition(snapPoint: SnapPoint, frame: CGRect = .zero) -> CGPoint {
-        switch snapPoint {
-        case .left:
-            return CGPoint(x: -frame.width, y: 0)
-        case .right:
-            return CGPoint(x: frame.maxX, y: 0)
-        default:
-            return .zero
-        }
-    }
-    
     public func push(viewController controller: UIViewController, animated: Bool) {
         let currentView = self.currentIndex >= 0 ? containerView.subviews[self.currentIndex] : nil
         
-        if let destinationView = controller.view {
-            addChild(controller)
-            containerView.addSubview(destinationView)
-            // equal Width and height
-            destinationView.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0).isActive = true
-            destinationView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 1.0).isActive = true
-            // set frame
-            destinationView.frame.origin = getPosition(snapPoint: .right, frame: containerView.bounds)
-            controller.didMove(toParent: self)
-            
+        if let destinationView = add(childController: controller) {
             if animated {
                 // animate
                 UIView.animate(withDuration: 0.85, delay: 0, options: .curveEaseOut, animations: {
@@ -53,10 +33,7 @@ open class TZContainerViewController: UIViewController {
                 }
                 destinationView.frame.origin = self.getPosition(snapPoint: .middle)
             }
-            
-            
         }
-        
     }
     
     public func popViewController(animated: Bool) {
@@ -122,6 +99,34 @@ open class TZContainerViewController: UIViewController {
                     c.remove()
                 }
             }
+        }
+    }
+    
+    // MARK: - HELPERS
+    private func getPosition(snapPoint: SnapPoint, frame: CGRect = .zero) -> CGPoint {
+        switch snapPoint {
+        case .left:
+            return CGPoint(x: -frame.width, y: 0)
+        case .right:
+            return CGPoint(x: frame.maxX, y: 0)
+        default:
+            return .zero
+        }
+    }
+    
+    private func add(childController controller: UIViewController, at snapPoint: SnapPoint = .right) -> UIView? {
+        if let destinationView = controller.view {
+            addChild(controller)
+            containerView.addSubview(destinationView)
+            // equal Width and height
+            destinationView.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0).isActive = true
+            destinationView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 1.0).isActive = true
+            // set frame
+            destinationView.frame.origin = getPosition(snapPoint: snapPoint, frame: containerView.bounds)
+            controller.didMove(toParent: self)
+            return destinationView
+        } else {
+            return nil
         }
     }
 }
