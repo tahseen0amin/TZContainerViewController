@@ -117,6 +117,7 @@ open class TZContainerViewController: UIViewController {
     private func add(childController controller: UIViewController, at snapPoint: SnapPoint = .right) -> UIView? {
         if let destinationView = controller.view {
             addChild(controller)
+            destinationView.frame = containerView.bounds
             containerView.addSubview(destinationView)
             // equal Width and height
             destinationView.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0).isActive = true
