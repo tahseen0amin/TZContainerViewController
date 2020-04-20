@@ -74,7 +74,7 @@ open class TZContainerViewController: UIViewController {
         let toRemoveController = self.children[self.currentIndex]
         if let removeView = toRemoveController.view {
             if animated {
-                UIView.animate(withDuration: 0.85, delay: 0, options: .curveEaseOut, animations: {
+                UIView.animate(withDuration: self.animationDuration, delay: 0, options: self.animationOption, animations: {
                     previousView.frame.origin = self.getPosition(snapPoint: .middle)
                     removeView.frame.origin = self.getPosition(snapPoint: .right, frame: self.containerView.bounds)
                 },completion: { success in
