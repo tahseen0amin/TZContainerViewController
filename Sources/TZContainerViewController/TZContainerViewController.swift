@@ -23,7 +23,7 @@ open class TZContainerViewController: UIViewController {
         if let destinationView = add(childController: controller) {
             if animated {
                 // animate
-                UIView.animate(withDuration: 0.85, delay: 0, options: .curveEaseOut, animations: {
+                UIView.animate(withDuration: self.animationDuration, delay: 0, options: self.animationDuration, animations: {
                     if let currentView = currentView {
                         currentView.frame.origin = self.getPosition(snapPoint: .left, frame: self.containerView.bounds)
                     }
