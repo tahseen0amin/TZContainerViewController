@@ -14,6 +14,8 @@ open class TZContainerViewController: UIViewController {
     open var currentIndex : Int {
         return self.children.count - 1
     }
+    open var animationDuration: TimeInterval = 0.85
+    open var animationOption: UIView.AnimationOptions = .curveEaseOut
     
     public func push(viewController controller: UIViewController, animated: Bool) {
         let currentView = self.currentIndex >= 0 ? containerView.subviews[self.currentIndex] : nil
@@ -42,7 +44,7 @@ open class TZContainerViewController: UIViewController {
         let toRemoveController = self.children[self.currentIndex]
         if let removeView = toRemoveController.view {
             if animated {
-                UIView.animate(withDuration: 0.85, delay: 0, options: .curveEaseOut, animations: {
+                UIView.animate(withDuration: self.animationDuration, delay: 0, options: self.animationOption, animations: {
                     if let previousView = previousView {
                         previousView.frame.origin = self.getPosition(snapPoint: .middle)
                     }
